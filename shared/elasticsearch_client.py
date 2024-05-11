@@ -1,3 +1,4 @@
+import time
 from elasticsearch import Elasticsearch
 
 class ElasticsearchClient:
@@ -5,6 +6,8 @@ class ElasticsearchClient:
         self.host = host
         self.port = port
         self.client = Elasticsearch(["http://"+self.host+":"+self.port])
+        while not self.ping():
+            time.sleep(1)
 
     def ping(self):
         return self.client.ping()
